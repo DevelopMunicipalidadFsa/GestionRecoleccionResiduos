@@ -42,11 +42,13 @@ if (isset($_POST['username']) && isset($_POST['clave'])) {
 
 			//defino la sesión que demuestra que el usuario está autorizado
 			// Llamamos al modelo que trae fecha y hora del servidor
-			$hora = ModeloGestor::mdlFecha();
+			$items2 = date("j-n-Y H:i:s",time());
+			$date = new DateTime($items2, new DateTimeZone('America/Argentina/Buenos_Aires'));
+			date_default_timezone_set('America/Argentina/Buenos_Aires');
+			$zonahoraria = date_default_timezone_get();
+			$items2=date("j-n-Y H:i:s",time());
 
-			$fechaConexion = date('m-d-Y H:i:s', strtotime($hora[0][0]));
-			// Se crean las variables de la sesión
-			$_SESSION["ultimoAcceso"] = $fechaConexion;
+			$_SESSION["ultimoAcceso"]= $items2;
 			//defino la fecha y hora de inicio de sesión en formato aaaa-mm-dd hh:mm:ss
 			$_SESSION['nombre1'] = $respuesta[0]["nombre"];
 			$_SESSION['codusu1'] = $respuesta[0]["codusu"];
@@ -57,7 +59,7 @@ if (isset($_POST['username']) && isset($_POST['clave'])) {
 			$_SESSION['nivel'] = $respuesta[0]["nivel"];
 			$_SESSION['validarIngreso'] = "ok";
 			//Redirecciona a la página principal
-			header("Location:./listaDescargas");
+			header("Location:./descargasListado");
 		} else {
 			echo "<script>	
 								jQuery(function(){
